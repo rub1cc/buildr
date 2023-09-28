@@ -1,7 +1,7 @@
 import { ImageWithFallback } from "@/components/image-with-fallback";
 import { ComponentConfig } from "@/types/config";
-import { POSITION_FIELDS } from "@/utils/contants";
-import { getUnitValue } from "@/utils/functions";
+import { POSITION_FIELDS } from "@/lib/contants";
+import { getUnitValue } from "@/lib/utils";
 import { ImageIcon } from "@radix-ui/react-icons";
 
 export const Image: ComponentConfig = {
@@ -13,7 +13,7 @@ export const Image: ComponentConfig = {
       label: "Size",
       divider: true,
     },
-    _width: {
+    width: {
       type: "unit",
       label: "Width",
       step: 10,
@@ -22,7 +22,7 @@ export const Image: ComponentConfig = {
         { value: "%", label: "%" },
       ],
     },
-    _height: {
+    height: {
       type: "unit",
       label: "Height",
       step: 10,
@@ -57,13 +57,13 @@ export const Image: ComponentConfig = {
     },
   },
   defaultProps: {
-    _left: 0,
-    _top: 0,
-    _height: {
+    left: 0,
+    top: 0,
+    height: {
       value: 150,
       unit: "px",
     },
-    _width: {
+    width: {
       value: 150,
       unit: "px",
     },
@@ -71,49 +71,31 @@ export const Image: ComponentConfig = {
   },
   render: ({
     // position
-    _left,
-    _top,
+    left,
+    top,
     // size
-    _height,
-    _width,
+    height,
+    width,
     // custom
     id,
     url,
     objectFit,
-    editMode,
-    qs,
+    ...props
   }) => {
-    if (!editMode) {
-      return (
-        <div
-          id={id}
-          style={{
-            position: "absolute",
-            left: _left,
-            top: _top,
-            width: getUnitValue(_width),
-            height: getUnitValue(_height),
-          }}
-        >
-          <ImageWithFallback
-            alt={id}
-            src={url}
-            fill
-            style={{
-              objectFit,
-            }}
-          />
-        </div>
-      );
-    }
     return (
       <ImageWithFallback
+        id={id}
         alt={id}
         src={url}
-        fill
+        objectFit={objectFit}
         style={{
-          objectFit,
+          position: "absolute",
+          left,
+          top,
+          width: getUnitValue(width),
+          height: getUnitValue(height),
         }}
+        {...props}
       />
     );
   },

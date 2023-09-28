@@ -34,6 +34,21 @@ const config: EditorConfig = {
   },
 };
 
+const defaultStories = [
+  {
+    title: 'Story 1',
+    content: []
+  },
+  {
+    title: 'Story 2',
+    content: []
+  },
+  {
+    title: 'Story 3',
+    content: []
+  }
+]
+
 export default function Home() {
   const [stories, setStories] = useState({
     [`Story-` + new Date().getTime()]: {
@@ -129,6 +144,7 @@ export default function Home() {
       <div id="main" className="flex h-[95svh]">
         <Editor
           key={selectedStoryId}
+          stories={defaultStories}
           data={stories[selectedStoryId] || {}}
           config={config}
           onChange={(v) => {

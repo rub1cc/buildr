@@ -4,8 +4,8 @@ import {
   FONT_FAMILY_OPTIONS,
   FONT_SIZE_OPTIONS,
   POSITION_FIELDS,
-} from "@/utils/contants";
-import { getUnitValue } from "@/utils/functions";
+} from "@/lib/contants";
+import { getUnitValue } from "@/lib/utils";
 import { ButtonIcon } from "@radix-ui/react-icons";
 
 export const Button: ComponentConfig = {
@@ -17,22 +17,20 @@ export const Button: ComponentConfig = {
       label: "Size",
       divider: true,
     },
-    _width: {
+    width: {
       type: "unit",
       label: "Width",
       step: 10,
       options: [
-        { value: "auto", label: "auto" },
         { value: "px", label: "px" },
         { value: "%", label: "%" },
       ],
     },
-    _height: {
+    height: {
       type: "unit",
       label: "Height",
       step: 10,
       options: [
-        { value: "auto", label: "auto" },
         { value: "px", label: "px" },
         { value: "%", label: "%" },
       ],
@@ -88,13 +86,13 @@ export const Button: ComponentConfig = {
     },
   },
   defaultProps: {
-    _left: 0,
-    _top: 0,
-    _width: {
+    left: 0,
+    top: 0,
+    width: {
       value: 100,
       unit: "px",
     },
-    _height: {
+    height: {
       value: 40,
       unit: "px",
     },
@@ -113,11 +111,11 @@ export const Button: ComponentConfig = {
   },
   render: ({
     // position
-    _left,
-    _top,
+    left,
+    top,
     // size
-    _height,
-    _width,
+    height,
+    width,
     // custom
     id,
     children,
@@ -126,8 +124,7 @@ export const Button: ComponentConfig = {
     borderRadius,
     fontSize,
     fontFamily,
-    editMode,
-    qs,
+    ...props
   }) => {
     return (
       <button
@@ -138,13 +135,13 @@ export const Button: ComponentConfig = {
           color,
           fontSize: getUnitValue(fontSize),
           borderRadius: getUnitValue(borderRadius),
-          ...(!editMode
-            ? { position: "absolute", left: _left, top: _top }
-            : {}),
-          ...(!editMode
-            ? { width: getUnitValue(_width), height: getUnitValue(_height) }
-            : { width: "100%", height: "100%" }),
+          position: "absolute",
+          left,
+          top,
+          width: getUnitValue(width),
+          height: getUnitValue(height),
         }}
+        {...props}
       >
         {children}
       </button>

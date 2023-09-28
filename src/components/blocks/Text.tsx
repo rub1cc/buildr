@@ -1,4 +1,4 @@
-import { ComponentConfig } from "@/types/config";
+import { ComponentConfig, FontWeight } from "@/types/config";
 import {
   FONT_FAMILY_OPTIONS,
   FONT_SIZE_OPTIONS,
@@ -6,8 +6,8 @@ import {
   POSITION_FIELDS,
   TEXT_ALIGN_OPTIONS,
   TEXT_DECORATION_OPTIONS,
-} from "@/utils/contants";
-import { getFontWeightStyle, getUnitValue } from "@/utils/functions";
+} from "@/lib/contants";
+import { getFontWeightStyle, getUnitValue } from "@/lib/utils";
 import { TextIcon } from "@radix-ui/react-icons";
 
 export const Text: ComponentConfig = {
@@ -19,22 +19,20 @@ export const Text: ComponentConfig = {
       label: "Size",
       divider: true,
     },
-    _width: {
+    width: {
       type: "unit",
       label: "Width",
       step: 10,
       options: [
-        { value: "auto", label: "auto" },
         { value: "px", label: "px" },
         { value: "%", label: "%" },
       ],
     },
-    _height: {
+    height: {
       type: "unit",
       label: "Height",
       step: 10,
       options: [
-        { value: "auto", label: "auto" },
         { value: "px", label: "px" },
         { value: "%", label: "%" },
       ],
@@ -98,7 +96,7 @@ export const Text: ComponentConfig = {
         return (
           <span
             style={{
-              ...getFontWeightStyle(option.value),
+              ...getFontWeightStyle(option.value as FontWeight),
             }}
           >
             {option.label}
@@ -113,13 +111,13 @@ export const Text: ComponentConfig = {
     },
   },
   defaultProps: {
-    _left: 0,
-    _top: 0,
-    _width: {
+    left: 0,
+    top: 0,
+    width: {
       value: 100,
       unit: "px",
     },
-    _height: {
+    height: {
       value: 32,
       unit: "px",
     },
@@ -136,11 +134,11 @@ export const Text: ComponentConfig = {
   },
   render: ({
     // position
-    _left,
-    _top,
+    left,
+    top,
     // size
-    _width,
-    _height,
+    width,
+    height,
     // custom
     id,
     children,
@@ -150,8 +148,7 @@ export const Text: ComponentConfig = {
     textAlign,
     textDecoration,
     color,
-    editMode,
-    qs,
+    ...props
   }) => {
     return (
       <p
@@ -162,14 +159,14 @@ export const Text: ComponentConfig = {
           textAlign,
           textDecoration,
           color,
+          position: "absolute",
+          left,
+          top,
+          width: getUnitValue(width),
+          height: getUnitValue(height),
           ...(fontWeight ? getFontWeightStyle(fontWeight) : {}),
-          ...(!editMode
-            ? { position: "absolute", left: _left, top: _top }
-            : {}),
-          ...(!editMode
-            ? { width: getUnitValue(_width), height: getUnitValue(_height) }
-            : { width: "100%", height: "100%" }),
         }}
+        {...props}
       >
         {children}
       </p>

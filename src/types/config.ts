@@ -29,13 +29,9 @@ export type Field = {
   renderOption?: (props: FieldOption) => ReactElement;
 };
 
-export type FieldValue =
-  | string
-  | number
-  | boolean
-  | UnitValue;
+export type FieldValue = string | number | boolean | UnitValue;
 
-export type UnitValue = { unit: string, value: number | string }
+export type UnitValue = { unit: string; value: number | string };
 
 export type ComponentConfig = {
   icon: ReactElement;
@@ -54,10 +50,31 @@ export type EditorConfig = {
   };
 };
 
+export type Story = {
+  title: string
+  content: Component[];
+};
+
+export type EditorData = {
+  content: Component[];
+};
+
 export type Component = {
   type: string;
-  props: {
-    id: string;
-    [key: string]: any;
-  };
+  props: ComponentProps;
 };
+
+export type ComponentProps = {
+  id: string;
+  [key: string]: any;
+};
+
+export type FontWeight =
+  | "regular"
+  | "italic"
+  | "medium"
+  | "medium-italic"
+  | "semibold"
+  | "semibold-italic"
+  | "bold"
+  | "bold-italic";

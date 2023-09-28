@@ -71,14 +71,6 @@ export const FONT_SIZE_OPTIONS: FieldOptions = [
     value: "px",
     label: "px",
   },
-  {
-    value: "rem",
-    label: "rem",
-  },
-  {
-    value: "em",
-    label: "em",
-  },
 ];
 
 export const TEXT_ALIGN_OPTIONS: FieldOptions = [
@@ -112,12 +104,12 @@ export const POSITION_FIELDS: { [key: string]: Field } = {
     type: "label",
     label: "Position",
   },
-  _top: {
+  top: {
     type: "number",
     label: "Top",
     step: 10,
   },
-  _left: {
+  left: {
     type: "number",
     label: "Left",
     step: 10,

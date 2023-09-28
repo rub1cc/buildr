@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 
 const isValidUrl = (urlString: string) => {
   var urlPattern = new RegExp(
@@ -15,16 +15,18 @@ const isValidUrl = (urlString: string) => {
   return !!urlPattern.test(urlString);
 };
 
-type ImageWithFallbackProps = typeof Image & {
-  fallback: string;
+type ImageWithFallbackProps = HTMLAttributes<HTMLDivElement> & {
+  fallback?: string;
   alt: string;
   src: string;
+  objectFit: string;
 };
 
 export function ImageWithFallback({
   fallback = "/fallback.jpg",
   alt,
   src,
+  objectFit,
   ...props
 }: ImageWithFallbackProps) {
   const [url, setUrl] = useState(fallback);
@@ -38,11 +40,15 @@ export function ImageWithFallback({
   }, [src]);
 
   return (
-    <Image
-      alt={alt}
-      onErrorCapture={() => setUrl(fallback)}
-      src={url}
-      {...props}
-    />
+    <div {...props}>
+      <Image
+        fill
+        alt={alt}
+        objectFit={objectFit}
+        onErrorCapture={() => setUrl(fallback)}
+        src={url}
+        className="pointer-events-none"
+      />
+    </div>
   );
 }

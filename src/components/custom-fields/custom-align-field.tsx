@@ -1,8 +1,17 @@
 import { Toggle } from "@/components/ui/toggle";
 import { cn } from "@/lib/utils";
-import { AlignBottomIcon, AlignCenterHorizontallyIcon, AlignCenterVerticallyIcon, AlignLeftIcon, AlignRightIcon, AlignTopIcon } from "@radix-ui/react-icons";
+import {
+  AlignBottomIcon,
+  AlignCenterHorizontallyIcon,
+  AlignCenterVerticallyIcon,
+  AlignLeftIcon,
+  AlignRightIcon,
+  AlignTopIcon,
+} from "@radix-ui/react-icons";
+import { useEditor } from "../editor/context";
 
-export const CustomAlignField = ({ onChange }) => {
+export const CustomAlignField = () => {
+  const { data, selectedElement, updateSelectedComponent } = useEditor();
   return (
     <div
       className={cn([
@@ -13,7 +22,11 @@ export const CustomAlignField = ({ onChange }) => {
       <Toggle
         pressed={false}
         onClick={() => {
-          onChange(0, "_left");
+          const newProps = {
+            ...data.content[selectedElement].props,
+            left: 0,
+          };
+          updateSelectedComponent(newProps);
         }}
       >
         <AlignLeftIcon />
@@ -21,10 +34,15 @@ export const CustomAlignField = ({ onChange }) => {
       <Toggle
         pressed={false}
         onClick={() => {
-          const el = document.querySelector(".element-selected") as HTMLElement;
+          const id = data.content[selectedElement].props.id;
+          const el = document.getElementById(id) as HTMLElement;
           const frame = document.getElementById("frame");
           const x = frame.offsetWidth / 2 - el.offsetWidth / 2;
-          onChange(Math.floor(x), "_left");
+          const newProps = {
+            ...data.content[selectedElement].props,
+            left: Math.floor(x),
+          };
+          updateSelectedComponent(newProps);
         }}
       >
         <AlignCenterHorizontallyIcon />
@@ -32,10 +50,15 @@ export const CustomAlignField = ({ onChange }) => {
       <Toggle
         pressed={false}
         onClick={() => {
-          const el = document.querySelector(".element-selected") as HTMLElement;
+          const id = data.content[selectedElement].props.id;
+          const el = document.getElementById(id) as HTMLElement;
           const frame = document.getElementById("frame");
           const x = frame.offsetWidth - el.offsetWidth;
-          onChange(Math.floor(x), "_left");
+          const newProps = {
+            ...data.content[selectedElement].props,
+            left: x,
+          };
+          updateSelectedComponent(newProps);
         }}
       >
         <AlignRightIcon />
@@ -43,7 +66,11 @@ export const CustomAlignField = ({ onChange }) => {
       <Toggle
         pressed={false}
         onClick={() => {
-          onChange(0, "_top");
+          const newProps = {
+            ...data.content[selectedElement].props,
+            top: 0,
+          };
+          updateSelectedComponent(newProps);
         }}
       >
         <AlignTopIcon />
@@ -51,10 +78,15 @@ export const CustomAlignField = ({ onChange }) => {
       <Toggle
         pressed={false}
         onClick={() => {
-          const el = document.querySelector(".element-selected") as HTMLElement;
+          const id = data.content[selectedElement].props.id;
+          const el = document.getElementById(id) as HTMLElement;
           const frame = document.getElementById("frame");
           const y = frame.offsetHeight / 2 - el.offsetHeight / 2;
-          onChange(Math.floor(y), "_top");
+          const newProps = {
+            ...data.content[selectedElement].props,
+            top: Math.floor(y),
+          };
+          updateSelectedComponent(newProps);
         }}
       >
         <AlignCenterVerticallyIcon />
@@ -62,10 +94,15 @@ export const CustomAlignField = ({ onChange }) => {
       <Toggle
         pressed={false}
         onClick={() => {
-          const el = document.querySelector(".element-selected") as HTMLElement;
+          const id = data.content[selectedElement].props.id;
+          const el = document.getElementById(id) as HTMLElement;
           const frame = document.getElementById("frame");
           const y = frame.offsetHeight - el.offsetHeight;
-          onChange(Math.floor(y), "_top");
+          const newProps = {
+            ...data.content[selectedElement].props,
+            top: Math.floor(y),
+          };
+          updateSelectedComponent(newProps);
         }}
       >
         <AlignBottomIcon />
