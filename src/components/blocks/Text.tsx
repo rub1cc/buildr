@@ -1,4 +1,4 @@
-import { ComponentConfig, FontWeight } from "@/types/config";
+import { ComponentConfig, FontWeight } from "@/lib/types";
 import {
   FONT_FAMILY_OPTIONS,
   FONT_SIZE_OPTIONS,
@@ -7,7 +7,8 @@ import {
   TEXT_ALIGN_OPTIONS,
   TEXT_DECORATION_OPTIONS,
 } from "@/lib/contants";
-import { getFontWeightStyle, getUnitValue } from "@/lib/utils";
+import { getFontWeightStyle } from "@/lib/get-font-weight-style";
+import { getUnitValue } from "@/lib/get-unit-value";
 import { TextIcon } from "@radix-ui/react-icons";
 
 export const Text: ComponentConfig = {

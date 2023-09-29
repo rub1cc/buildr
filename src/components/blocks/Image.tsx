@@ -1,7 +1,7 @@
 import { ImageWithFallback } from "@/components/image-with-fallback";
-import { ComponentConfig } from "@/types/config";
+import { ComponentConfig } from "@/lib/types";
 import { POSITION_FIELDS } from "@/lib/contants";
-import { getUnitValue } from "@/lib/utils";
+import { getUnitValue } from "@/lib/get-unit-value";
 import { ImageIcon } from "@radix-ui/react-icons";
 
 export const Image: ComponentConfig = {

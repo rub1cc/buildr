@@ -1,11 +1,11 @@
-import type { ComponentConfig } from "@/types/config";
+import type { ComponentConfig } from "@/lib/types";
 import {
   BORDER_RADIUS_OPTIONS,
   FONT_FAMILY_OPTIONS,
   FONT_SIZE_OPTIONS,
   POSITION_FIELDS,
 } from "@/lib/contants";
-import { getUnitValue } from "@/lib/utils";
+import { getUnitValue } from "@/lib/get-unit-value";
 import { ButtonIcon } from "@radix-ui/react-icons";
 
 export const Button: ComponentConfig = {

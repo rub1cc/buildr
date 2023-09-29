@@ -1,10 +1,10 @@
-import { CustomAlignField } from "@/components/custom-fields/custom-align-field";
+import { CustomAlignField } from "@/components/field/custom/align-field";
 import {
   TextAlignCenterIcon,
   TextAlignLeftIcon,
   TextAlignRightIcon,
 } from "@radix-ui/react-icons";
-import type { Field, FieldOptions } from "@/types/config";
+import type { Field, FieldOptions } from "@/lib/types";
 
 export const FONT_FAMILY_OPTIONS = [
   "Inter",

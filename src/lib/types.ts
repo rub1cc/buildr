@@ -7,27 +7,69 @@ export type FieldOption = {
 
 export type FieldOptions = FieldOption[];
 
-export type Field = {
-  type:
-    | "text"
-    | "label"
-    | "unit"
-    | "color"
-    | "select"
-    | "radio"
-    | "number"
-    | "custom";
+export type TextField = {
+  type: "text";
+  label: string;
+};
+
+export type LabelField = {
+  type: "label";
   label: string;
   divider?: boolean;
+};
+
+export type UnitField = {
+  type: "unit";
+  label: string;
   step?: number;
-  min?: number;
   max?: number;
-  unit?: string;
-  render?: ({ onChange, field, name, label, value }) => ReactElement;
-  column?: "grid-cols-1" | "grid-cols-2" | "grid-cols-3";
   options?: FieldOptions;
   renderOption?: (props: FieldOption) => ReactElement;
 };
+
+export type ColorField = {
+  type: "color";
+  label: string;
+};
+
+export type SelectField = {
+  type: "select";
+  label: string;
+  options: FieldOptions;
+  renderOption?: (props: FieldOption) => ReactElement;
+};
+
+export type RadioField = {
+  type: "radio";
+  label: string;
+  column: "grid-cols-1" | "grid-cols-2" | "grid-cols-3";
+  options: FieldOptions;
+  renderOption?: (props: FieldOption) => ReactElement;
+};
+
+export type NumberField = {
+  type: "number";
+  label: string;
+  step?: number;
+  max?: number;
+  min?: number;
+};
+
+export type CustomField = {
+  type: "custom";
+  label: string;
+  render: ({ onChange, field, name, label, value }) => ReactElement;
+};
+
+export type Field =
+  | TextField
+  | LabelField
+  | UnitField
+  | ColorField
+  | SelectField
+  | RadioField
+  | NumberField
+  | CustomField;
 
 export type FieldValue = string | number | boolean | UnitValue;
 
@@ -51,7 +93,7 @@ export type EditorConfig = {
 };
 
 export type Story = {
-  title: string
+  title: string;
   content: Component[];
 };
 

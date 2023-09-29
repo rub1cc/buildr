@@ -1,5 +1,5 @@
 import { Toggle } from "@/components/ui/toggle";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 import {
   AlignBottomIcon,
   AlignCenterHorizontallyIcon,
@@ -8,7 +8,7 @@ import {
   AlignRightIcon,
   AlignTopIcon,
 } from "@radix-ui/react-icons";
-import { useEditor } from "../editor/context";
+import { useEditor } from "@/components/editor/context";
 
 export const CustomAlignField = () => {
   const { data, selectedElement, updateSelectedComponent } = useEditor();

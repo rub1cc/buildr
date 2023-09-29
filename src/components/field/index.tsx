@@ -1,18 +1,18 @@
-import { cn } from "@/lib/utils";
-import { Field, FieldValue, UnitValue } from "@/types/config";
+import { cn } from "@/lib/cn";
+import { Field, FieldValue, UnitValue } from "@/lib/types";
 import { ChangeEvent } from "react";
 import { SketchPicker } from "react-color";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Toggle } from "./ui/toggle";
+} from "@/components/ui/select";
+import { Toggle } from "@/components/ui/toggle";
 
 type FieldProps = {
   name: string;

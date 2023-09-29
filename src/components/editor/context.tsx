@@ -1,11 +1,13 @@
-import { reorder, replace } from "@/lib/utils";
+import { replace } from "@/lib/replace";
+import { reorder } from "@/lib/reorder";
+
 import {
   Component,
   ComponentProps,
   EditorConfig,
   EditorData,
   Story,
-} from "@/types/config";
+} from "@/lib/types";
 import {
   ReactElement,
   createContext,
@@ -18,9 +20,6 @@ type EditorContextState = {
   stories: Story[];
   selectedStory: number | null;
   setSelectedStory: (index: number) => void;
-  updateSelectedStory: (newProps: Story) => void;
-  moveSelectedStoryForward: () => void;
-  moveSelectedStoryBackward: () => void;
 
   data: EditorData;
   config: EditorConfig;
@@ -50,31 +49,34 @@ export const useEditor = () => {
 type EditorProviderProps = {
   children: ReactElement;
   stories: Story[];
-  data: EditorData;
   config: EditorConfig;
-  onChange: (data: EditorData) => void;
+  onChange: (data: Story[]) => void;
 };
 
 export const EditorProvider = ({
   children,
   stories: initalStories,
-  data: initialData,
   config,
   onChange,
 }: EditorProviderProps) => {
-  const [data, setData] = useState<{ content: Component[] } | null>(
-    initialData
-  );
+  const [data, setData] = useState<Story | null>(initalStories[0]);
   const [stories, setStories] = useState<Story[]>(initalStories);
 
-  const [selectedStory, setSelectedStory] = useState<number | null>(null);
+  const [selectedStory, setSelectedStory] = useState<number | null>(0);
   const [selectedElement, setSelectedElement] = useState<number | null>(null);
-  
-  console.log({stories})
 
   useEffect(() => {
-    onChange && onChange(data);
+    onChange && onChange(stories);
+  }, [stories]);
+
+  useEffect(() => {
+    selectedStory !== null && setStories(replace(stories, selectedStory, data));
   }, [data]);
+
+  const handleSelectStory = (index: number) => {
+    setSelectedStory(index);
+    setData(stories[index]);
+  };
 
   const addComponent = (name: string) => {
     const newData = { ...data };
@@ -98,13 +100,14 @@ export const EditorProvider = ({
     const id = `${
       newData.content[selectedElement]?.type
     }-${new Date().getTime()}`;
+    console.log(newData.content[selectedElement].props);
     const newItem = {
       ...newData.content[selectedElement],
       props: {
         ...newData.content[selectedElement].props,
         top:
           newData.content[selectedElement].props.top +
-          newData.content[selectedElement].props.height.value,
+          Number(newData.content[selectedElement].props.height.value),
         id,
       },
     };
@@ -135,7 +138,8 @@ export const EditorProvider = ({
   };
 
   const moveSelectedComponentForward = () => {
-    if (selectedElement === null) return null;
+    if (selectedElement === null || selectedElement === data.content.length - 1)
+      return;
     setData({
       ...data,
       content: reorder(data.content, selectedElement, selectedElement + 1),
@@ -146,7 +150,8 @@ export const EditorProvider = ({
   };
 
   const moveSelectedComponentToFront = () => {
-    if (selectedElement === null) return null;
+    if (selectedElement === null || selectedElement === data.content.length - 1)
+      return;
     setData({
       ...data,
       content: reorder(data.content, selectedElement, data.content.length - 1),
@@ -157,7 +162,7 @@ export const EditorProvider = ({
   };
 
   const moveSelectedComponentBackward = () => {
-    if (selectedElement === null) return null;
+    if (selectedElement === null || selectedElement === 0) return;
     setData({
       ...data,
       content: reorder(data.content, selectedElement, selectedElement - 1),
@@ -168,7 +173,7 @@ export const EditorProvider = ({
   };
 
   const moveSelectedComponentToBack = () => {
-    if (selectedElement === null) return null;
+    if (selectedElement === null || selectedElement === 0) return;
     setData({
       ...data,
       content: reorder(data.content, selectedElement, 0),
@@ -181,8 +186,13 @@ export const EditorProvider = ({
   return (
     <editorContext.Provider
       value={{
-        data,
         config,
+        stories,
+        data,
+
+        selectedStory,
+        setSelectedStory: handleSelectStory,
+
         selectedElement,
         setSelectedElement,
 
