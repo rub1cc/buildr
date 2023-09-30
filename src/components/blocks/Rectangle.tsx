@@ -1,11 +1,10 @@
-import { ImageWithFallback } from "@/components/image-with-fallback";
 import { POSITION_FIELDS } from "@/lib/contants";
 import { getUnitValue } from "@/lib/get-unit-value";
 import { ComponentConfig } from "@/lib/types";
-import { ImageIcon } from "@radix-ui/react-icons";
+import { FrameIcon } from "@radix-ui/react-icons";
 
-export const Image: ComponentConfig = {
-  icon: <ImageIcon />,
+export const Rectangle: ComponentConfig = {
+  icon: <FrameIcon />,
   fields: {
     ...POSITION_FIELDS,
     label_size: {
@@ -36,34 +35,23 @@ export const Image: ComponentConfig = {
       label: "Style",
       divider: true,
     },
+    backgroundColor: {
+      type: "color",
+      label: "Background",
+    },
     borderRadius: {
       type: "number",
       label: "Radius",
       step: 4,
     },
-    label_image: {
-      type: "label",
-      label: "Image",
-      divider: true,
+    borderWidth: {
+      type: "number",
+      label: "Border Width",
+      step: 1,
     },
-    url: {
-      type: "text",
-      label: "Url",
-    },
-    objectFit: {
-      type: "radio",
-      label: "Sizing",
-      column: "grid-cols-2",
-      options: [
-        {
-          value: "cover",
-          label: "Fill",
-        },
-        {
-          value: "contain",
-          label: "Fit",
-        },
-      ],
+    borderColor: {
+      type: "color",
+      label: "Border Color",
     },
   },
   defaultProps: {
@@ -77,8 +65,10 @@ export const Image: ComponentConfig = {
       value: 150,
       unit: "px",
     },
-    objectFit: "cover",
-    borderRadius: 4,
+    backgroundColor: "#99EEFE",
+    borderRadius: 0,
+    borderWidth: 2,
+    borderColor: "#2CC2E3",
   },
   render: ({
     // position
@@ -91,26 +81,32 @@ export const Image: ComponentConfig = {
     id,
     url,
     objectFit,
+    backgroundColor,
     borderRadius,
+    borderColor,
+    borderWidth,
     ...props
   }) => {
     return (
-      <ImageWithFallback
+      <div
         id={id}
         alt={id}
         src={url}
         objectFit={objectFit}
         style={{
           position: "absolute",
-          overflow: 'hidden',
           left,
           top,
+          backgroundColor,
+          overflow: "hidden",
+          borderColor,
+          borderWidth,
           borderRadius,
           width: getUnitValue(width),
           height: getUnitValue(height),
         }}
         {...props}
-      />
+      ></div>
     );
   },
 };

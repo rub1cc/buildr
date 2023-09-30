@@ -8,7 +8,7 @@ import {
   AlignRightIcon,
   AlignTopIcon,
 } from "@radix-ui/react-icons";
-import { useEditor } from "@/components/editor/context";
+import { useEditor } from "@/lib/editor-context";
 
 export const CustomAlignField = () => {
   const { data, selectedElement, updateSelectedComponent } = useEditor();

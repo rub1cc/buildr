@@ -58,6 +58,7 @@ export function Field({
             }}
             max={field.max}
             step={field.step || 1}
+            min={field.min || 0}
             className={cn(["px-1 w-full bg-gray-100 ring-0 border-none px-2"])}
           ></Input>
         </div>
@@ -86,6 +87,7 @@ export function Field({
               });
             }}
             max={field.max}
+            min={field.min || 0}
             className={cn(["px-1 w-full bg-gray-100 ring-0 border-none px-2"])}
           ></Input>
           <Select

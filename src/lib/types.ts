@@ -23,6 +23,7 @@ export type UnitField = {
   label: string;
   step?: number;
   max?: number;
+  min?: number;
   options?: FieldOptions;
   renderOption?: (props: FieldOption) => ReactElement;
 };

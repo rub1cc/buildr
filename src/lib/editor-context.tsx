@@ -20,6 +20,8 @@ type EditorContextState = {
   stories: Story[];
   selectedStory: number | null;
   setSelectedStory: (index: number) => void;
+  moveSelectedStoryLeft: () => void;
+  moveSelectedStoryRight: () => void;
 
   data: EditorData;
   config: EditorConfig;
@@ -76,6 +78,22 @@ export const EditorProvider = ({
   const handleSelectStory = (index: number) => {
     setSelectedStory(index);
     setData(stories[index]);
+  };
+
+  const moveSelectedStoryLeft = () => {
+    if (selectedStory === null || selectedStory === 0) return;
+    const newData = reorder(stories, selectedStory, selectedStory - 1);
+    setStories(newData);
+    setData(newData[selectedStory - 1]);
+    setSelectedStory(selectedStory - 1);
+  };
+
+  const moveSelectedStoryRight = () => {
+    if (selectedStory === null || selectedStory === stories.length - 1) return;
+    const newData = reorder(stories, selectedStory, selectedStory + 1);
+    setStories(newData);
+    setData(newData[selectedStory + 1]);
+    setSelectedStory(selectedStory + 1);
   };
 
   const addComponent = (name: string) => {
@@ -192,6 +210,8 @@ export const EditorProvider = ({
 
         selectedStory,
         setSelectedStory: handleSelectStory,
+        moveSelectedStoryLeft,
+        moveSelectedStoryRight,
 
         selectedElement,
         setSelectedElement,

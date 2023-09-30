@@ -1,5 +1,6 @@
 "use client";
 import { Button as ButtonBlock } from "@/components/blocks/Button";
+import { Rectangle } from "@/components/blocks/Rectangle";
 import { Image } from "@/components/blocks/Image";
 import { Text } from "@/components/blocks/Text";
 
@@ -10,6 +11,7 @@ const config: EditorConfig = {
   components: {
     Text,
     Image,
+    Rectangle,
     Button: ButtonBlock,
   },
 };
@@ -31,6 +33,11 @@ const initialStories = [
 
 export default function Home() {
   return (
-    <Editor stories={initialStories} config={config} onChange={console.log} />
+    <Editor
+      stories={initialStories}
+      config={config}
+      onChange={console.log}
+      onPublish={(v) => alert(JSON.stringify(v))}
+    />
   );
 }

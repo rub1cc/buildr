@@ -3,6 +3,8 @@ import { Field } from "@/components/field";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/cn";
 import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   CopyIcon,
@@ -11,11 +13,12 @@ import {
   DoubleArrowDownIcon,
   DoubleArrowUpIcon,
   EyeOpenIcon,
+  PlusIcon,
   TrashIcon,
 } from "@radix-ui/react-icons";
 
-import { EditorProvider, useEditor } from "@/components/editor/context";
-import { Draggable } from "@/components/editor/draggable";
+import { EditorProvider, useEditor } from "@/lib/editor-context";
+import { Draggable } from "@/components/draggable";
 import { Button } from "@/components/ui/button";
 import {
   ContextMenu,
@@ -31,7 +34,8 @@ import { DndContext } from "@dnd-kit/core";
 
 type EditorProps = {
   stories: Story[];
-  onChange: (v) => void;
+  onChange: (v: Story[]) => void;
+  onPublish: (v: Story[]) => void;
   config: EditorConfig;
 };
 
@@ -42,16 +46,18 @@ export const Editor = (props: EditorProps) => {
       config={props.config}
       onChange={props.onChange}
     >
-      <EditorComponent />
+      <EditorComponent onPublish={props.onPublish} />
     </EditorProvider>
   );
 };
 
-function EditorComponent() {
+function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
   const {
     stories,
     selectedStory,
     setSelectedStory,
+    moveSelectedStoryLeft,
+    moveSelectedStoryRight,
 
     data,
     config,
@@ -82,7 +88,7 @@ function EditorComponent() {
             <EyeOpenIcon className="w-4 h-4 mr-2" />
             Preview
           </Button>
-          <Button size="sm">
+          <Button size="sm" onClick={() => onPublish(stories)}>
             Publish
             <ChevronDownIcon className="w-4 h-4 ml-2" />
           </Button>
@@ -127,7 +133,7 @@ function EditorComponent() {
             className="w-[280px] z-10 bg-white p-4 fixed left-0 h-[95svh] shadow ring-offset-white overflow-y-auto"
           >
             <p className="text-xs font-semibold mb-4">Elements</p>
-            <ul className="grid grid-cols-2 gap-4">
+            <ul className="grid grid-cols-1 gap-4">
               {Object.keys(config.components).map((componentName) => (
                 <li
                   key={componentName}
@@ -144,7 +150,7 @@ function EditorComponent() {
                 </li>
               ))}
             </ul>
-            <Separator className="my-4" />
+            <Separator className="my-8" />
             <p className="text-xs font-semibold mb-4">Layers</p>
             <ul className="flex flex-col-reverse gap-4">
               {data.content.length === 0 && (
@@ -176,17 +182,42 @@ function EditorComponent() {
           </div>
           <div
             id="preview"
-            className="w-full bg-gray-100 flex justify-center items-center h-[95svh] "
+            className="w-full bg-gray-100 flex flex-col justify-center items-center h-[95svh] "
             onClick={() => {
               setSelectedElement(null);
             }}
           >
+             <Button
+              id="frame-prev"
+              size="icon"
+              variant="ghost"
+              className={cn([
+                "cursor-pointer",
+                "bg-gray-50 rounded-full hover:bg-gray-200 absolute -translate-x-[220px] w-10 h-10",
+                "flex flex-col",
+              ])}
+            >
+              <PlusIcon className="w-4 h-4"/>
+            </Button>
+             <Button
+              id="frame-prev"
+              size="icon"
+              variant="ghost"
+              className={cn([
+                "cursor-pointer",
+                "bg-gray-50 rounded-full hover:bg-gray-200 absolute translate-x-[220px] w-10 h-10",
+                "flex flex-col",
+              ])}
+            >
+              <PlusIcon className="w-4 h-4"/>
+            </Button>
             {selectedStory < stories.length - 1 && (
               <div
                 id="frame-next"
                 onClick={() => setSelectedStory(selectedStory + 1)}
                 className={cn([
-                  "bg-white absolute translate-x-[110%] opacity-50",
+                  "cursor-pointer",
+                  "bg-white absolute translate-x-[120%] -translate-y-[20px] scale-[95%] opacity-50",
                   "w-screen max-w-[375px] h-screen max-h-[667px]",
                   "shadow ring-offset-white",
                   "flex flex-col",
@@ -207,7 +238,8 @@ function EditorComponent() {
                 id="frame-prev"
                 onClick={() => setSelectedStory(selectedStory - 1)}
                 className={cn([
-                  "bg-white absolute -translate-x-[110%] opacity-50",
+                  "cursor-pointer",
+                  "bg-white absolute -translate-x-[120%] -translate-y-[20px] scale-[95%] opacity-50",
                   "w-screen max-w-[375px] h-screen max-h-[667px]",
                   "shadow ring-offset-white",
                   "flex flex-col",
@@ -306,6 +338,22 @@ function EditorComponent() {
                   </ContextMenu>
                 );
               })}
+            </div>
+            <div>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => moveSelectedStoryLeft()}
+              >
+                <ArrowLeftIcon className="w-4 h-4" />
+              </Button>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => moveSelectedStoryRight()}
+              >
+                <ArrowRightIcon className="w-4 h-4" />
+              </Button>
             </div>
           </div>
           <div

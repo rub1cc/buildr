@@ -45,9 +45,8 @@ export const Button: ComponentConfig = {
       label: "Background",
     },
     borderRadius: {
-      type: "unit",
+      type: "number",
       label: "Radius",
-      options: BORDER_RADIUS_OPTIONS,
     },
     label_text: {
       type: "label",
@@ -97,10 +96,7 @@ export const Button: ComponentConfig = {
       unit: "px",
     },
     backgroundColor: "#000000",
-    borderRadius: {
-      value: 100,
-      unit: "px",
-    },
+    borderRadius: 100,
     children: "Button",
     fontSize: {
       value: 14,
@@ -133,8 +129,8 @@ export const Button: ComponentConfig = {
           backgroundColor,
           fontFamily,
           color,
+          borderRadius,
           fontSize: getUnitValue(fontSize),
-          borderRadius: getUnitValue(borderRadius),
           position: "absolute",
           left,
           top,
