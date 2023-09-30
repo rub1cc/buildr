@@ -22,6 +22,9 @@ type EditorContextState = {
   setSelectedStory: (index: number) => void;
   moveSelectedStoryLeft: () => void;
   moveSelectedStoryRight: () => void;
+  addStoryBeforeSelectedStory: () => void;
+  addStoryAfterSelectedStory: () => void;
+  deleteSelectedStory: () => void;
 
   data: EditorData;
   config: EditorConfig;
@@ -94,6 +97,42 @@ export const EditorProvider = ({
     setStories(newData);
     setData(newData[selectedStory + 1]);
     setSelectedStory(selectedStory + 1);
+  };
+
+  const addStoryBeforeSelectedStory = () => {
+    if (selectedStory === null) return;
+    const newData = [...stories];
+    newData.splice(selectedStory, 0, {
+      title: "Story-" + new Date().getTime(),
+      content: [],
+    });
+    setStories(newData);
+    setSelectedStory(selectedStory + 1);
+    setData(newData[selectedStory + 1]);
+  };
+
+  const addStoryAfterSelectedStory = () => {
+    if (selectedStory === null) return;
+    const newData = [...stories];
+    newData.splice(selectedStory + 1, 0, {
+      title: "Story-" + new Date().getTime(),
+      content: [],
+    });
+    setStories(newData);
+  };
+
+  const deleteSelectedStory = () => {
+    if (selectedStory === null) return;
+    const newData = [...stories];
+    newData.splice(selectedStory, 1);
+    setStories(newData);
+    if (selectedStory === stories.length - 1) {
+      setSelectedStory(newData.length - 1);
+      setData(newData[newData.length - 1]);
+    } else {
+      setSelectedStory(selectedStory);
+      setData(newData[selectedStory]);
+    }
   };
 
   const addComponent = (name: string) => {
@@ -212,6 +251,9 @@ export const EditorProvider = ({
         setSelectedStory: handleSelectStory,
         moveSelectedStoryLeft,
         moveSelectedStoryRight,
+        addStoryBeforeSelectedStory,
+        addStoryAfterSelectedStory,
+        deleteSelectedStory,
 
         selectedElement,
         setSelectedElement,

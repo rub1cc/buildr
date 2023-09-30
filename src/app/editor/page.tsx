@@ -18,15 +18,7 @@ const config: EditorConfig = {
 
 const initialStories = [
   {
-    title: "Story 1",
-    content: [],
-  },
-  {
-    title: "Story 2",
-    content: [],
-  },
-  {
-    title: "Story 3",
+    title: "Story-" + new Date().getTime(),
     content: [],
   },
 ];

@@ -58,6 +58,9 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
     setSelectedStory,
     moveSelectedStoryLeft,
     moveSelectedStoryRight,
+    addStoryBeforeSelectedStory,
+    addStoryAfterSelectedStory,
+    deleteSelectedStory,
 
     data,
     config,
@@ -90,7 +93,6 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
           </Button>
           <Button size="sm" onClick={() => onPublish(stories)}>
             Publish
-            <ChevronDownIcon className="w-4 h-4 ml-2" />
           </Button>
         </div>
       </nav>
@@ -187,8 +189,7 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
               setSelectedElement(null);
             }}
           >
-             <Button
-              id="frame-prev"
+            <Button
               size="icon"
               variant="ghost"
               className={cn([
@@ -196,11 +197,11 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
                 "bg-gray-50 rounded-full hover:bg-gray-200 absolute -translate-x-[220px] w-10 h-10",
                 "flex flex-col",
               ])}
+              onClick={() => addStoryBeforeSelectedStory()}
             >
-              <PlusIcon className="w-4 h-4"/>
+              <PlusIcon className="w-4 h-4" />
             </Button>
-             <Button
-              id="frame-prev"
+            <Button
               size="icon"
               variant="ghost"
               className={cn([
@@ -208,8 +209,9 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
                 "bg-gray-50 rounded-full hover:bg-gray-200 absolute translate-x-[220px] w-10 h-10",
                 "flex flex-col",
               ])}
+              onClick={() => addStoryAfterSelectedStory()}
             >
-              <PlusIcon className="w-4 h-4"/>
+              <PlusIcon className="w-4 h-4" />
             </Button>
             {selectedStory < stories.length - 1 && (
               <div
@@ -217,7 +219,7 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
                 onClick={() => setSelectedStory(selectedStory + 1)}
                 className={cn([
                   "cursor-pointer",
-                  "bg-white absolute translate-x-[120%] -translate-y-[20px] scale-[95%] opacity-50",
+                  "bg-white absolute translate-x-[120%] scale-[95%] opacity-50",
                   "w-screen max-w-[375px] h-screen max-h-[667px]",
                   "shadow ring-offset-white",
                   "flex flex-col",
@@ -239,7 +241,7 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
                 onClick={() => setSelectedStory(selectedStory - 1)}
                 className={cn([
                   "cursor-pointer",
-                  "bg-white absolute -translate-x-[120%] -translate-y-[20px] scale-[95%] opacity-50",
+                  "bg-white absolute -translate-x-[120%] scale-[95%] opacity-50",
                   "w-screen max-w-[375px] h-screen max-h-[667px]",
                   "shadow ring-offset-white",
                   "flex flex-col",
@@ -255,6 +257,20 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
                 })}
               </div>
             )}
+            <div className="flex items-center justify-between w-screen max-w-[375px] min-h-[40px] translate-y-[30px]">
+              {stories.length > 1 && (
+                <div
+                  className="grid w-full gap-1.5"
+                  style={{
+                    gridTemplateColumns: `repeat(${stories.length}, minmax(0, 1fr))`,
+                  }}
+                >
+                  {stories.map((s) => (
+                    <div key={s.title} className="h-1 w-full bg-black/10"></div>
+                  ))}
+                </div>
+              )}
+            </div>
             <div
               id="frame"
               className={cn([
@@ -339,21 +355,40 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
                 );
               })}
             </div>
-            <div>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => moveSelectedStoryLeft()}
-              >
-                <ArrowLeftIcon className="w-4 h-4" />
-              </Button>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => moveSelectedStoryRight()}
-              >
-                <ArrowRightIcon className="w-4 h-4" />
-              </Button>
+            <div className="flex items-center justify-between w-screen max-w-[375px] min-h-[40px]">
+              {stories.length > 1 && (
+                <>
+                  <div className="flex items-center">
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => moveSelectedStoryLeft()}
+                      className="hover:-translate-x-1 transition duration-200"
+                      disabled={selectedStory === 0}
+                    >
+                      <ArrowLeftIcon className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => moveSelectedStoryRight()}
+                      className="hover:translate-x-1 transition duration-200"
+                      disabled={selectedStory === stories.length - 1}
+                    >
+                      <ArrowRightIcon className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => deleteSelectedStory()}
+                    className="hover:text-red-500/90"
+                  >
+                    <TrashIcon className="w-4 h-4 mr-2" />
+                    Delete frame
+                  </Button>
+                </>
+              )}
             </div>
           </div>
           <div

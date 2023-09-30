@@ -25,6 +25,7 @@ export const Text: ComponentConfig = {
       label: "Width",
       step: 10,
       options: [
+        { value: "auto", label: "auto" },
         { value: "px", label: "px" },
         { value: "%", label: "%" },
       ],
@@ -34,6 +35,7 @@ export const Text: ComponentConfig = {
       label: "Height",
       step: 10,
       options: [
+        { value: "auto", label: "auto" },
         { value: "px", label: "px" },
         { value: "%", label: "%" },
       ],
@@ -115,12 +117,12 @@ export const Text: ComponentConfig = {
     left: 0,
     top: 0,
     width: {
-      value: 100,
+      value: 150,
       unit: "px",
     },
     height: {
       value: 32,
-      unit: "px",
+      unit: "auto",
     },
     children: "Text",
     fontWeight: "regular",

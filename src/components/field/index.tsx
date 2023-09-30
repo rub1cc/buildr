@@ -4,7 +4,11 @@ import { ChangeEvent } from "react";
 import { SketchPicker } from "react-color";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -22,13 +26,7 @@ type FieldProps = {
   onChange: (v: FieldValue) => void;
 };
 
-export function Field({
-  name,
-  field,
-  value,
-  label,
-  onChange,
-}: FieldProps) {
+export function Field({ name, field, value, label, onChange }: FieldProps) {
   if (field.type === "text") {
     return (
       <div className="flex w-full max-w-sm items-center gap-1.5">
@@ -70,26 +68,37 @@ export function Field({
       <div className="flex w-full max-w-sm items-center gap-1.5">
         <Label className="w-[150px] text-xs truncate">{label}</Label>
         <div className={cn([`flex items-center w-full gap-2 relative`])}>
-          <Input
-            value={(value as UnitValue).value}
-            type="number"
-            disabled={(value as UnitValue).unit === "auto"}
-            step={field.step || 1}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              const max = field.max;
-              if (Number(e.target.value) > max) {
-                onChange(max);
-                return;
-              }
-              onChange({
-                ...(value as UnitValue),
-                value: e.target.value,
-              });
-            }}
-            max={field.max}
-            min={field.min || 0}
-            className={cn(["px-1 w-full bg-gray-100 ring-0 border-none px-2"])}
-          ></Input>
+          {(value as UnitValue).unit === "auto" ? (
+            <Input
+              value="auto"
+              disabled={true}
+              className={cn([
+                "px-1 w-full bg-gray-100 ring-0 border-none px-2",
+              ])}
+            ></Input>
+          ) : (
+            <Input
+              value={(value as UnitValue).value}
+              type="number"
+              step={field.step || 1}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                const max = field.max;
+                if (Number(e.target.value) > max) {
+                  onChange(max);
+                  return;
+                }
+                onChange({
+                  ...(value as UnitValue),
+                  value: e.target.value,
+                });
+              }}
+              max={field.max}
+              min={field.min || 0}
+              className={cn([
+                "px-1 w-full bg-gray-100 ring-0 border-none px-2",
+              ])}
+            ></Input>
+          )}
           <Select
             onValueChange={(v) => {
               onChange({
