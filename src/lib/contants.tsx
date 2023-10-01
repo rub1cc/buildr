@@ -106,12 +106,12 @@ export const POSITION_FIELDS: { [key: string]: Field } = {
   },
   top: {
     type: "number",
-    label: "Top",
+    label: "X",
     step: 10,
   },
   left: {
     type: "number",
-    label: "Left",
+    label: "Y",
     step: 10,
   },
   _alignment: {

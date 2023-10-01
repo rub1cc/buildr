@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 import { Field, FieldValue, UnitValue } from "@/lib/types";
 import { ChangeEvent } from "react";
-import { SketchPicker } from "react-color";
+import { Color, SketchPicker } from "react-color";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -228,7 +228,7 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
             align="end"
           >
             <SketchPicker
-              color={value}
+              color={value as Color}
               onChange={(color: { hex: string }) => onChange(color.hex)}
               className="border-none shadow-none"
             />

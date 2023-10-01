@@ -84,8 +84,25 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
 
   return (
     <>
-      <nav className="flex justify-between items-center h-[5svh] px-4 border-b border-gray-100 shadow ring-offset-white">
+      <nav className="flex justify-between items-center h-[6svh] px-4 border-b border-gray-100 shadow ring-offset-white">
         <p className="font-bold">Snapvite.co</p>
+        <ul className="flex items-center justify-center gap-8">
+          {Object.keys(config.components).map((componentName) => (
+            <li
+              key={componentName}
+              role="button"
+              onClick={() => {
+                addComponent(componentName);
+              }}
+              className="flex items-center gap-2"
+            >
+              <span className="w-[30px] h-[30px] flex justify-center items-center p-2 bg-gray-50 border border-gray-100 rounded-lg text-gray-700">
+                {config.components[componentName].icon}
+              </span>
+              <span className="text-xs">{componentName}</span>
+            </li>
+          ))}
+        </ul>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm">
             <EyeOpenIcon className="w-4 h-4 mr-2" />
@@ -97,7 +114,7 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
         </div>
       </nav>
 
-      <div id="main" className="flex h-[95svh]">
+      <div id="main" className="flex h-[94svh]">
         <DndContext
           onDragStart={(e) => {
             const selectedElementIndex = e.active.id
@@ -132,27 +149,8 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
         >
           <div
             id="sidebar"
-            className="w-[280px] z-10 bg-white p-4 fixed left-0 h-[95svh] shadow ring-offset-white overflow-y-auto"
+            className="w-[280px] z-10 bg-white p-4 fixed left-0 h-[94svh] shadow ring-offset-white overflow-y-auto"
           >
-            <p className="text-xs font-semibold mb-4">Elements</p>
-            <ul className="grid grid-cols-1 gap-4">
-              {Object.keys(config.components).map((componentName) => (
-                <li
-                  key={componentName}
-                  role="button"
-                  onClick={() => {
-                    addComponent(componentName);
-                  }}
-                  className="flex items-center gap-2"
-                >
-                  <span className="w-[30px] h-[30px] flex justify-center items-center p-2 bg-gray-100 border border-gray-200 rounded-lg text-gray-700">
-                    {config.components[componentName].icon}
-                  </span>
-                  <span className="text-xs">{componentName}</span>
-                </li>
-              ))}
-            </ul>
-            <Separator className="my-8" />
             <p className="text-xs font-semibold mb-4">Layers</p>
             <ul className="flex flex-col-reverse gap-4">
               {data.content.length === 0 && (
@@ -184,7 +182,7 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
           </div>
           <div
             id="preview"
-            className="w-full bg-gray-100 flex flex-col justify-center items-center h-[95svh] "
+            className="w-full bg-gray-100 flex flex-col justify-center items-center h-[94svh] "
             onClick={() => {
               setSelectedElement(null);
             }}
@@ -393,7 +391,7 @@ function EditorComponent({ onPublish }: { onPublish: (v: Story[]) => void }) {
           </div>
           <div
             id="panel"
-            className="w-[280px] bg-white p-4 flex flex-col gap-2 fixed right-0 h-[95svh] shadow ring-offset-white overflow-y-auto pb-32"
+            className="w-[280px] bg-white p-4 flex flex-col gap-2 fixed right-0 h-[94svh] shadow ring-offset-white overflow-y-auto pb-32"
           >
             {selectedElement === null && (
               <div className="flex flex-col justify-center items-center p-4 gap-2 text-gray-500 text-xs bg-gray-100 rounded-lg border border-gray-200">
