@@ -121,3 +121,16 @@ export type FontWeight =
   | "semibold-italic"
   | "bold"
   | "bold-italic";
+
+export type Invitation = {
+  id: string;
+  slug: string;
+  title: string;
+  is_published: boolean;
+  is_template: boolean;
+  user_id: string;
+  data: Story[];
+  created_at: string;
+  updated_at: string;
+  viewed_at: string;
+};
