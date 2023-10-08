@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Toggle } from "@/components/ui/toggle";
+import { NumberInput } from "../ui/number-input";
 
 type FieldProps = {
   name: string;
@@ -37,7 +38,7 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
           id={name}
           value={value as string}
           onChange={(e) => onChange(e.currentTarget.value)}
-          className="px-2 py-1 text-xs bg-gray-100 ring-0 border-none wrap"
+          className="px-2 py-1 text-xs bg-neutral-800 ring-0 border-none wrap"
         />
       </div>
     );
@@ -48,17 +49,13 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
       <div className="flex w-full max-w-sm items-center gap-1.5">
         <Label className="w-[150px] text-xs truncate">{label}</Label>
         <div className={cn([`flex items-center w-full gap-2 relative`])}>
-          <Input
+          <NumberInput
             value={value as string}
-            type="number"
-            onChange={(v) => {
-              onChange(Number(v.target.value));
-            }}
+            onChange={onChange}
             max={field.max}
             step={field.step || 1}
             min={field.min || 0}
-            className={cn(["px-1 w-full bg-gray-100 ring-0 border-none px-2"])}
-          ></Input>
+          ></NumberInput>
         </div>
       </div>
     );
@@ -73,31 +70,27 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
               value="auto"
               disabled={true}
               className={cn([
-                "px-1 w-full bg-gray-100 ring-0 border-none px-2",
+                "px-1 w-full bg-neutral-800 ring-0 border-none px-2",
               ])}
             ></Input>
           ) : (
-            <Input
-              value={(value as UnitValue).value}
-              type="number"
+            <NumberInput
+              value={(value as UnitValue).value as string}
               step={field.step || 1}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              onChange={(v) => {
                 const max = field.max;
-                if (Number(e.target.value) > max) {
+                if (v > max) {
                   onChange(max);
                   return;
                 }
                 onChange({
                   ...(value as UnitValue),
-                  value: e.target.value,
+                  value: v,
                 });
               }}
               max={field.max}
               min={field.min || 0}
-              className={cn([
-                "px-1 w-full bg-gray-100 ring-0 border-none px-2",
-              ])}
-            ></Input>
+            ></NumberInput>
           )}
           <Select
             onValueChange={(v) => {
@@ -107,7 +100,7 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
               });
             }}
           >
-            <SelectTrigger className="w-full text-xs bg-gray-100 ring-0 border-0">
+            <SelectTrigger className="w-full text-xs bg-neutral-800 ring-0 border-0">
               <SelectValue
                 placeholder={
                   field.options.find(
@@ -116,11 +109,12 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
                 }
               />
             </SelectTrigger>
-            <SelectContent className="text-xs">
+            <SelectContent className="text-xs bg-neutral-800 border-none">
               {field.options.map((option) => (
                 <SelectItem
                   key={option.value as string}
                   value={option.value as string}
+                  className="focus:bg-neutral-700 focus:text-neutral-400 hover:bg-neutral-700 text-neutral-400"
                 >
                   {field.renderOption
                     ? field.renderOption(option)
@@ -144,7 +138,7 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
         <Label className="w-[150px] text-xs truncate">{label}</Label>
         <div
           className={cn([
-            "grid items-center gap-1.5 bg-gray-100 rounded-lg p-1.5 w-full",
+            "grid items-center gap-1.5 bg-neutral-800 rounded-lg p-1.5 w-full",
             field.column,
           ])}
         >
@@ -152,7 +146,7 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
             return (
               <Toggle
                 key={option.value as string}
-                className="data-[state=on]:bg-white data-[state=on]:shadow data-[state=on]:ring-offset-white data-[state=on]:ring-gray-950"
+                className="data-[state=on]:bg-neutral-700 data-[state=on]:text-neutral-400 hover:bg-neutral-700 hover:text-neutral-400 data-[state=on]:shadow data-[state=on]:ring-offset-white data-[state=on]:ring-gray-950"
                 pressed={value === option.value}
                 onPressedChange={() => {
                   onChange(option.value);
@@ -176,16 +170,17 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
       <div className="flex w-full max-w-sm items-center gap-1.5">
         <Label className="w-[150px] text-xs truncate">{label}</Label>
         <Select onValueChange={onChange}>
-          <SelectTrigger className="w-full text-xs bg-gray-100 ring-0 border-0">
+          <SelectTrigger className="w-full text-xs bg-neutral-800 ring-0 border-0">
             <SelectValue
               placeholder={field.options.find((o) => o.value === value)?.label}
             />
           </SelectTrigger>
-          <SelectContent className="text-xs min-w-[200px]">
+          <SelectContent className="text-xs min-w-[200px] bg-neutral-800 border-none">
             {field.options.map((option) => (
               <SelectItem
                 key={option.value as string}
                 value={option.value as string}
+                className="focus:bg-neutral-700 focus:text-neutral-400 hover:bg-neutral-700 text-neutral-400"
               >
                 {field.renderOption ? field.renderOption(option) : option.label}
               </SelectItem>
@@ -214,7 +209,7 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
       <div className="flex w-full max-w-sm items-center gap-1.5">
         <Label className="w-[150px] text-xs truncate mt-1">{label}</Label>
         <Popover>
-          <PopoverTrigger className="text-xs bg-gray-100 rounded-lg w-full px-2 py-2.5 flex items-center">
+          <PopoverTrigger className="text-xs bg-neutral-800 rounded-lg w-full px-2 py-2.5 flex items-center">
             <span
               className={`w-5 h-5 rounded-md block mr-2`}
               style={{
@@ -231,6 +226,13 @@ export function Field({ name, field, value, label, onChange }: FieldProps) {
               color={value as Color}
               onChange={(color: { hex: string }) => onChange(color.hex)}
               className="border-none shadow-none"
+              styles={{
+                default: {
+                  picker: {
+                    backgroundColor: "#262626",
+                  },
+                },
+              }}
             />
           </PopoverContent>
         </Popover>

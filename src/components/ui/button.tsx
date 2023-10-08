@@ -9,12 +9,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-purple-200 text-neutral-950",
+        default: "bg-purple-300 text-neutral-950",
         outline:
           "border border-neutral-200 bg-transparent shadow-sm hover:bg-neutral-100 hover:text-neutral-900",
         secondary:
-          "bg-neutral-100 text-neutral-900 shadow-sm hover:bg-neutral-100/80",
-        ghost: "text-neutral-400 hover:bg-neutral-900",
+          "text-neutral-400 bg-neutral-800 hover:bg-neutral-800/90",
+        ghost: "text-neutral-400 hover:bg-neutral-800",
         link: "text-neutral-900 underline-offset-4 hover:underline",
       },
       size: {

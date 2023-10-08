@@ -158,6 +158,7 @@ export const Text: ComponentConfig = {
         id={id}
         style={{
           fontSize: getUnitValue(fontSize),
+          lineHeight: 1.25,
           fontFamily,
           textAlign,
           textDecoration,

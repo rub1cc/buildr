@@ -15,7 +15,7 @@ export const CustomAlignField = () => {
   return (
     <div
       className={cn([
-        "grid items-center gap-1.5 bg-gray-100 rounded-lg p-1.5 w-full",
+        "grid items-center gap-1.5 rounded-lg p-1.5 w-full bg-neutral-800",
         "grid-cols-3",
       ])}
     >

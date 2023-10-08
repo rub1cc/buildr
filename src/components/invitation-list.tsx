@@ -79,21 +79,21 @@ export const InvitationList = ({
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="rounded-lg p-1 w-[150px] bg-neutral-800 border-neutral-800"
+                  className="rounded-lg p-1 w-[150px]"
                   side="bottom"
                   align="end"
                 >
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full justify-start font-normal text-neutral-300"
+                    className="w-full justify-start font-normal hover:bg-neutral-700"
                   >
                     Duplicate
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full justify-start font-normal hover:text-red-500 text-neutral-300"
+                    className="w-full justify-start font-normal hover:text-red-500 hover:bg-neutral-700"
                     onClick={() =>
                       toast.promise(onDelete(invitation.id), {
                         loading: "Deleting...",

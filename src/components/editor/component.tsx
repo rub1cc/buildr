@@ -103,17 +103,17 @@ export function Component({
 
   return (
     <>
-      <nav className="flex justify-between items-center h-[6svh] px-4 border-b border-gray-100 shadow ring-offset-white">
+      <nav className="flex justify-between items-center h-[6svh] px-4 border-b border-neutral-800 bg-neutral-950">
         <div className="flex items-center gap-2 relative">
-          <Button size="sm" variant="outline" className="relative">
+          <Button size="sm" variant="ghost" className="relative">
             <Link href="/" className="absolute inset-0 opacity-0">
               Back to dashboard
             </Link>
             <ChevronLeftIcon className="w-4 h-4" />
             Back
           </Button>
-          <p>{title}</p>
-          <code className="text-xs py-1 px-2 bg-purple-50 font-semibold text-purple-500 rounded-md">
+          <p className="text-white">{title}</p>
+          <code className="text-xs py-1 px-2 bg-purple-500/10 border border-purple-500/30 font-semibold text-purple-500 rounded-md">
             FREE
           </code>
         </div>
@@ -125,9 +125,9 @@ export function Component({
               onClick={() => {
                 addComponent(componentName);
               }}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-neutral-400"
             >
-              <span className="w-[30px] h-[30px] flex justify-center items-center p-2 bg-gray-50 border border-gray-100 rounded-lg text-gray-700">
+              <span className="w-[30px] h-[30px] flex justify-center items-center p-2 bg-gray-50 bg-neutral-800 border border-neutral-700 rounded-lg">
                 {config.components[componentName].icon}
               </span>
               <span className="text-xs">{componentName}</span>
@@ -135,10 +135,10 @@ export function Component({
           ))}
         </ul>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon">
+          <Button variant="secondary" size="icon">
             <GearIcon className="w-4 h-4" />
           </Button>
-          <Button variant="outline" size="icon">
+          <Button variant="secondary" size="icon">
             <PlayIcon className="w-4 h-4" />
           </Button>
           <Button size="sm" onClick={() => onPublish(stories)}>
@@ -147,7 +147,7 @@ export function Component({
         </div>
       </nav>
 
-      <div id="main" className="flex h-[94svh]">
+      <div id="main" className="flex h-[94svh] bg-neutral-950">
         <DndContext
           onDragStart={(e) => {
             const selectedElementIndex = e.active.id
@@ -182,12 +182,12 @@ export function Component({
         >
           <div
             id="sidebar"
-            className="w-[280px] z-10 bg-white p-4 fixed left-0 h-[94svh] shadow ring-offset-white overflow-y-auto"
+            className="w-[280px] z-10 bg-neutral-950 p-4 fixed left-0 h-[94svh] overflow-y-auto"
           >
             <p className="text-xs font-semibold mb-4">Layers</p>
             <ul className="flex flex-col-reverse gap-4">
               {data.content.length === 0 && (
-                <div className="flex flex-col justify-center items-center p-4 gap-2 text-gray-500 text-xs bg-gray-100 rounded-lg border border-gray-200">
+                <div className="flex flex-col justify-center items-center p-4 gap-2 text-xs bg-neutral-900 rounded-lg">
                   <p>No elements</p>
                 </div>
               )}
@@ -215,17 +215,17 @@ export function Component({
           </div>
           <div
             id="preview"
-            className="w-full bg-gray-100 flex flex-col justify-center items-center h-[94svh] "
+            className="w-full bg-neutral-900 flex flex-col justify-center items-center h-[94svh] "
             onClick={() => {
               setSelectedElement(null);
             }}
           >
             <Button
               size="icon"
-              variant="ghost"
+              variant="secondary"
               className={cn([
                 "cursor-pointer",
-                "bg-gray-50 rounded-full hover:bg-gray-200 absolute -translate-x-[220px] w-10 h-10",
+                "rounded-full absolute -translate-x-[220px] w-10 h-10",
                 "flex flex-col",
               ])}
               onClick={() => addStoryBeforeSelectedStory()}
@@ -234,10 +234,10 @@ export function Component({
             </Button>
             <Button
               size="icon"
-              variant="ghost"
+              variant="secondary"
               className={cn([
                 "cursor-pointer",
-                "bg-gray-50 rounded-full hover:bg-gray-200 absolute translate-x-[220px] w-10 h-10",
+                "rounded-full absolute translate-x-[220px] w-10 h-10",
                 "flex flex-col",
               ])}
               onClick={() => addStoryAfterSelectedStory()}
@@ -250,7 +250,7 @@ export function Component({
                 onClick={() => setSelectedStory(selectedStory + 1)}
                 className={cn([
                   "cursor-pointer",
-                  "bg-white absolute translate-x-[120%] scale-[95%] opacity-50",
+                  "bg-white absolute translate-x-[120%] scale-[95%] opacity-20",
                   "w-screen max-w-[375px] h-screen max-h-[667px]",
                   "shadow ring-offset-white",
                   "flex flex-col",
@@ -272,7 +272,7 @@ export function Component({
                 onClick={() => setSelectedStory(selectedStory - 1)}
                 className={cn([
                   "cursor-pointer",
-                  "bg-white absolute -translate-x-[120%] scale-[95%] opacity-50",
+                  "bg-white absolute -translate-x-[120%] scale-[95%] opacity-20",
                   "w-screen max-w-[375px] h-screen max-h-[667px]",
                   "shadow ring-offset-white",
                   "flex flex-col",
@@ -425,16 +425,16 @@ export function Component({
           </div>
           <div
             id="panel"
-            className="w-[280px] bg-white p-4 flex flex-col gap-2 fixed right-0 h-[94svh] shadow ring-offset-white overflow-y-auto pb-32"
+            className="w-[280px] bg-neutral-950 p-4 flex flex-col gap-2 fixed right-0 h-[94svh] shadow ring-offset-white overflow-y-auto pb-32"
           >
             {selectedElement === null && (
-              <div className="flex flex-col justify-center items-center p-4 gap-2 text-gray-500 text-xs bg-gray-100 rounded-lg border border-gray-200">
+              <div className="flex flex-col justify-center items-center p-4 gap-2 text-gray-500 text-xs bg-neutral-900 rounded-lg">
                 <CursorArrowIcon />
                 <p>Please select an element</p>
               </div>
             )}
             {selectedElement !== null && (
-              <div className="fixed right-0 w-[280px] bottom-0 p-4 border-t border-gray-200 bg-white z-10">
+              <div className="fixed right-0 w-[280px] bottom-0 p-4 border-t border-neutral-800 bg-neutral-950 z-10">
                 <p className="text-xs font-semibold mb-2">Utilities</p>
                 <div className="flex gap-1">
                   <Button
