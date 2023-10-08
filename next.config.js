@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -12,6 +15,13 @@ const nextConfig = {
       },
     ],
   },
+  redirects: async () => [
+    {
+      source: "/",
+      destination: "/dashboard",
+      permanent: true,
+    },
+  ],
 };
 
 module.exports = nextConfig;

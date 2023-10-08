@@ -48,6 +48,9 @@ export function ImageWithFallback({
         onErrorCapture={() => setUrl(fallback)}
         src={url}
         className="pointer-events-none"
+        style={{
+          borderRadius: props.style.borderRadius,
+        }}
       />
     </div>
   );
