@@ -9,6 +9,7 @@ import { ExitIcon } from "@radix-ui/react-icons";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +34,7 @@ export default async function Home() {
         <NavMenus />
 
         <div className="flex items-center gap-2">
-          <UserAvatar email={user.email} user={user}/>
+          <UserAvatar email={user.email} user={user} />
           <LogoutButton>
             <Button variant="ghost" size="icon">
               <ExitIcon className="w-4 h-4" />
@@ -49,7 +50,9 @@ export default async function Home() {
             <CreateInvitationButton user={user} />
           </div>
           <div className="grid grid-cols-1 gap-4 mt-8">
-            <InvitationList invitations={invitations} />
+            <Suspense fallback="Loading...">
+              <InvitationList invitations={invitations} />
+            </Suspense>
           </div>
         </div>
       </main>

@@ -13,11 +13,10 @@ import {
   DotIcon,
   DoubleArrowDownIcon,
   DoubleArrowUpIcon,
-  EyeOpenIcon,
   GearIcon,
   PlayIcon,
   PlusIcon,
-  TrashIcon,
+  TrashIcon
 } from "@radix-ui/react-icons";
 
 import { Draggable } from "@/components/draggable";
@@ -34,7 +33,14 @@ import {
 import { EditorProvider, useEditor } from "@/lib/editor-context";
 import { EditorConfig, FieldValue, Story } from "@/lib/types";
 import { DndContext } from "@dnd-kit/core";
+import {
+  PopoverArrow,
+  PopoverContent,
+  PopoverPortal,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
 import Link from "next/link";
+import { Popover } from "../ui/popover";
 
 export type EditorProps = {
   stories: Story[];
@@ -67,8 +73,7 @@ export function Component({
   onPublish,
 }: {
   title: string;
-  slug;
-  string;
+  slug: string;
   onPublish: (v: Story[]) => void;
 }) {
   const {
@@ -103,7 +108,7 @@ export function Component({
 
   return (
     <>
-      <nav className="flex justify-between items-center h-[6svh] px-4 border-b border-neutral-800 bg-neutral-950">
+      <nav className="flex justify-between items-center h-[6svh] px-4 border-b border-neutral-800 bg-neutral-950 overflow-visible">
         <div className="flex items-center gap-2 relative">
           <Button size="sm" variant="ghost" className="relative">
             <Link href="/" className="absolute inset-0 opacity-0">
@@ -112,7 +117,40 @@ export function Component({
             <ChevronLeftIcon className="w-4 h-4" />
             Back
           </Button>
-          <p className="text-white">{title}</p>
+          <Popover>
+            <PopoverTrigger>
+              <p className="text-white">{title}</p>
+            </PopoverTrigger>
+            <PopoverPortal>
+              <PopoverContent
+                className="z-20 bg-neutral-950 p-4 rounded-lg mt-2 text-xs max-w-[250px] border border-neutral-800"
+                align="start"
+              >
+                <PopoverArrow />
+                <div className="flex gap-2 items-center">
+                  <label className="w-[80px]">Name</label>
+                  <input
+                    value={title}
+                    className="bg-neutral-800 p-2 rounded-md text-white"
+                  />
+                </div>
+                <div className="flex gap-2 items-center mt-2">
+                  <label className="w-[80px]">Slug</label>
+                  <input
+                    value={slug}
+                    className="bg-neutral-800 p-2 rounded-md text-white"
+                  />
+                </div>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="mt-2 w-full"
+                >
+                  Update
+                </Button>
+              </PopoverContent>
+            </PopoverPortal>
+          </Popover>
           <code className="text-xs py-1 px-2 bg-purple-500/10 border border-purple-500/30 font-semibold text-purple-500 rounded-md">
             FREE
           </code>

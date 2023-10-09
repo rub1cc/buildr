@@ -37,7 +37,7 @@ export function NavMenus() {
                   href={menu.href}
                   className={cn([
                     "flex items-center gap-1.5",
-                    "font-normal text-sm justify-start px-4 py-2 w-full rounded text-neutral-400 hover:bg-neutral-800",
+                    "font-normal text-sm justify-start px-4 py-2 w-full rounded-sm text-neutral-400 hover:bg-neutral-800",
                     pathname === menu.href && "bg-neutral-800",
                   ])}
                 >

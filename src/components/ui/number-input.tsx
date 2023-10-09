@@ -39,7 +39,7 @@ export function NumberInput({
         step={step || 1}
         min={min || 0}
         className={cn([
-          "px-1 w-full bg-neutral-800 ring-0 border-none px-2 appearance-none",
+          "px-1 w-full bg-neutral-800 ring-0 border-none px-2 text-white",
         ])}
         style={{
           appearance: "textfield",
@@ -52,7 +52,7 @@ export function NumberInput({
           variant="secondary"
           className="p-0 min-h-auto"
           onClick={() => {
-            if (Number(val) > max) return;
+            if (Number(val) >= max) return;
             setVal(String(Number(val) + 1));
           }}
         >
@@ -62,7 +62,7 @@ export function NumberInput({
           variant="secondary"
           className="p-0 min-h-auto"
           onClick={() => {
-            if (Number(val) < min) return;
+            if (Number(val) <= min) return;
             setVal(String(Number(val) - 1));
           }}
         >

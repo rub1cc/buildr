@@ -18,7 +18,7 @@ export function UserAvatar({ email, user }: { email: string; user: User }) {
             <Avatar>
               <AvatarImage src={user.user_metadata.avatar_url} />
             </Avatar>
-            <span className="truncate w-[150px] text-neutral-300 font-medium">
+            <span className="truncate w-[150px] text-neutral-400 font-medium">
               {user.user_metadata.full_name}
             </span>
           </div>
